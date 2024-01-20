@@ -3,8 +3,21 @@ from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
 import time
 
-endpoint = "ENTER ENDPOINT HERE"
-key = "ENTER KEY HERE"
+# endpoint = "https://rohanlab1.cognitiveservices.azure.com/"
+# key = "38e171f0d0984faeb04e52f0f22244e1"
+
+def load_credentials(filename):
+    credentials = {}
+    with open(filename, 'r') as file:
+        for line in file:
+            key, value = line.strip().split('=', 1)
+            credentials[key] = value
+    return credentials
+
+credentials = load_credentials('credentials.txt')
+
+endpoint = credentials.get('AZURE_ENDPOINT')
+key = credentials.get('AZURE_KEY')
 
 credentials = CognitiveServicesCredentials(key)
 
